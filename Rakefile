@@ -144,11 +144,10 @@ end
 namespace :update_scripts do
   desc 'Copy scripts to emulator and restart the app'
   task :restart => APK_DEPENDENCIES do |t|
-    if stop_app
-      update_scripts
-    else
-      build_apk(t, false)
+    if build_apk(t, false) || !stop_app
       install_apk
+    else
+      update_scripts
     end
     start_app
   end
